@@ -13,3 +13,48 @@ $color-grey-dark-2: #6D5D4B;
 // FONT VARIABLES
 $font-primary: 'Nunito', sans-serif;
 $font-display: 'Josefin Sans', sans-serif;
+
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: inherit;
+}
+
+html {
+    box-sizing: border-box;
+    font-size: 62.5%; // 10px/16px = 62.5% => 1rem = 10px for users who haven't modified default
+}
+
+body {
+    font-family: $font-primary;
+    color: $color-grey-dark-2;
+    font-weight: 300;
+    line-height: 1.6;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+// GRID COLUMN LAYOUT
+// 8rem for sidebar, 1fr on each side of ~1140px center layout to fill evenly
+// Also allows for "full-bleed" sections among 8 column sections as shown:
+// -------------------------------------
+// side|FULL*******BLEED*******SECTIONS|
+// ^bar| empty |center sections| empty |
+// -------------------------------------
+// Center column lines named col-start n & col-end n
+// Added minmax to 1fr filler columns to ensure maring is retained around
+// center sections as viewport shrinks
+
+.container {
+    display: grid;
+    grid-template-rows: 80vh min-content 40vw repeat(3, min-content);
+    grid-template-columns: [sidebar-start] 8rem [sidebar-end full-start] minmax(6rem, 1fr) [center-start] repeat(8, [col-start] minmax(min-content, 14rem) [col-end]) [center-end] minmax(6rem, 1fr) [full-end];
+
+
+    // For development, delete later
+    & > * {
+        padding: 40px;
+        font-size: 3rem;
+    }
+}
