@@ -1,3 +1,6 @@
+
+//*************************************** ABSTRACTS ***************************************\\
+
 // COLOR VARIABLES
 $color-primary: #c69963;
 $color-primary-dark: #B28451;
@@ -14,6 +17,39 @@ $color-grey-dark-2: #6D5D4B;
 $font-primary: 'Nunito', sans-serif;
 $font-display: 'Josefin Sans', sans-serif;
 
+/////////////////////////////////////////////////////////////////////////////////////
+// MEDIA QUERY MANAGER (inputs)
+// 0-600: 		(small)
+// 600-1000: 	(medium)
+// 1000-1200: 	(large)
+// 1200-1800:   --Regular Styles--
+// 1800+:		(x-large)
+// No hover:	(no-hover)
+// Our base rem setting of 62.5% for 10px does not apply to media queries
+// And rems do not always translate well to media queries so we're using ems
+// Using ems instead of px to ensure it scales to user preferences on base font size
+// Not making breakpoints exclusive so that we can apply multiple to keep code DRY
+// >1800 ? apply big : <1200 ? apply tab-land; <900 ? apply additional changes etc.
+@mixin respond($breakpoint) {
+	@if $breakpoint == small {
+		@media only screen and (max-width: 37.5em) { @content }; 	//600px
+	}
+	@if $breakpoint == medium {
+		@media only screen and (max-width: 62.5em) { @content }; 	//1000px
+	}
+	@if $breakpoint == large {
+		@media only screen and (max-width: 75em) { @content };	    //1200px
+	}
+	@if $breakpoint == x-large {
+		@media only screen and (min-width: 112.5em) { @content }; 	//1800px
+	}
+	@if $breakpoint == no-hover {
+		@media only screen and (hover: none) { @content };          //No hover capability
+	}
+}
+
+//*****************************************************************************************\\
+
 *,
 *::before,
 *::after {
@@ -25,6 +61,14 @@ $font-display: 'Josefin Sans', sans-serif;
 html {
     box-sizing: border-box;
     font-size: 62.5%; // 10px/16px = 62.5% => 1rem = 10px for users who haven't modified default
+
+    @include respond(large) {
+        font-size: 50%;
+    }
+
+    @include respond(x-large) {
+        font-size: 75%;
+    }
 }
 
 body {
@@ -45,10 +89,14 @@ body {
 // Center column lines named col-start n & col-end n
 // Added minmax to 1fr filler columns to ensure maring is retained around
 // center sections as viewport shrinks
-
 .container {
     display: grid;
     grid-template-rows: 80vh min-content 40vw repeat(3, min-content);
     grid-template-columns: [sidebar-start] 8rem [sidebar-end full-start] minmax(6rem, 1fr) [center-start] repeat(8, [col-start] minmax(min-content, 14rem) [col-end]) [center-end] minmax(6rem, 1fr) [full-end];
 
+    // Remove sidebar column and add row instead for smaller vw
+    @include respond(medium) {
+        grid-template-rows: 6rem 80vh min-content 40vw repeat(3, min-content);
+        grid-template-columns: [full-start] minmax(6rem, 1fr) [center-start] repeat(8, [col-start] minmax(min-content, 14rem) [col-end]) [center-end] minmax(6rem, 1fr) [full-end];
+    }
 }
