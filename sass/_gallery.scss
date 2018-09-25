@@ -15,7 +15,7 @@
         grid-template-rows: repeat(7, 15vw);
     }
 
-    // Image parent is now grid item, for object-fit
+    // Image parent is grid item, for object-fit
     &__item {
 
         &--1 {
