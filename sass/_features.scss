@@ -13,6 +13,10 @@
 
     // Fix feature grids with less text stretching h4 columns with default value
     align-items: start;
+
+    @include respond(smaller) {
+        margin: 7rem 0;
+    }
 }
 
 .feature {

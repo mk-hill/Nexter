@@ -9,12 +9,27 @@
     justify-items: center;
     grid-row-gap: 2rem;
 
+    // Make realtors fill its own new row introduced in _base
+    @include respond(small) {
+        grid-column: 1 / -1;
+    }
+
     &__list {
         display: grid;
         grid-template-columns: min-content max-content;
         grid-column-gap: 2rem;
         grid-row-gap: 5vh;
         align-items: center;
+
+        // 6 columns when realtors is on its own row
+        @include respond(small) {
+            grid-template-columns: repeat(3, min-content max-content);
+        }
+
+        // Back to 2 columns when they start overflowing vw
+        @include respond(smaller) {
+            grid-template-columns: min-content max-content;
+        }
     }
 
     &__img {

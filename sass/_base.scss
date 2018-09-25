@@ -19,8 +19,9 @@ $font-display: 'Josefin Sans', sans-serif;
 
 /////////////////////////////////////////////////////////////////////////////////////
 // MEDIA QUERY MANAGER (inputs)
-// 0-600: 		(small)
-// 600-1000: 	(medium)
+// 0-600:       (smaller)
+// 600-800:		(small)
+// 800-1000: 	(medium)
 // 1000-1200: 	(large)
 // 1200-1800:   --Regular Styles--
 // 1800+:		(x-large)
@@ -31,8 +32,11 @@ $font-display: 'Josefin Sans', sans-serif;
 // Not making breakpoints exclusive so that we can apply multiple to keep code DRY
 // >1800 ? apply big : <1200 ? apply tab-land; <900 ? apply additional changes etc.
 @mixin respond($breakpoint) {
+    @if $breakpoint == smaller {
+		@media only screen and (max-width: 37.5em) { @content };     //600px
+	}
 	@if $breakpoint == small {
-		@media only screen and (max-width: 37.5em) { @content }; 	//600px
+		@media only screen and (max-width: 50em) { @content }; 	    //800px
 	}
 	@if $breakpoint == medium {
 		@media only screen and (max-width: 62.5em) { @content }; 	//1000px
@@ -98,5 +102,11 @@ body {
     @include respond(medium) {
         grid-template-rows: 6rem 80vh min-content 40vw repeat(3, min-content);
         grid-template-columns: [full-start] minmax(6rem, 1fr) [center-start] repeat(8, [col-start] minmax(min-content, 14rem) [col-end]) [center-end] minmax(6rem, 1fr) [full-end];
+    }
+
+    // Split header and realtors into 2 columns, have header cover 100vh-top bar
+    // All rows after 2nd become auto implicit
+    @include respond(small) {
+        grid-template-rows: 6rem calc(100vh - 6rem);
     }
 }

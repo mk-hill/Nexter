@@ -18,6 +18,15 @@
     grid-row-gap: 1.5rem;
     justify-content: center;
 
+    // Adjust header to new extra rows in _base at this breakpoint
+    @include respond(small) {
+        grid-column: 1 / -1;
+    }
+
+    @include respond(smaller) {
+        padding: 5rem;   
+    }
+
     &__logo {
         height: 3rem;
         justify-self: center;
